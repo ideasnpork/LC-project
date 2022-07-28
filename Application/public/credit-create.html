@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Luggage Credit 생성하기</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+    <div class="container">
+        <br>
+        <h2>Luggage Credit 생성하기</h2>
+        <br>
+        <label for="name" class="form-label">인증서:</label><br>
+        <input type="text" class="form-control" id="cert" name="cert" value="appUser"><br>
+        <label for="name" class="form-label">creditid:</label><br>
+        <input type="text" class="form-control" id="creditid" name="name" value="credit1"><br>
+        <label for="color" class="form-label">owner:</label><br>
+        <input type="text" class="form-control" id="owner" name="color" value="bstudent"><br>
+        <label for="size" class="form-label">flightid:</label><br>
+        <input type="text" class="form-control" id="flightid" name="size" value="BS15"><br>
+        <label for="owner" class="form-label">weight:</label><br>
+        <input type="text" class="form-control" id="weight" name="owner" value="10"><br>
+        <label for="owner" class="form-label">price:</label><br>
+        <input type="text" class="form-control" id="price" name="owner" value="20000"><br>
+        <br>
+        <button id="create-btn" class="btn btn-primary">Luggage Credit 생성</button>&nbsp
+        <a href="/" class="btn btn-secondary">돌아가기</a>
+        <br><br>
+        <p class="lead">If you click the "Submit" button, a transaction of Luggage Credit creation will be submitted".</p>
+        <div>
+            <div id="result-str"></div>
+            <!-- <table id="result-table" class="table table-sm"></table> -->
+        </div>
+    </div>
+</body>
+
+<script>
+    $("#create-btn").click( function(){
+        var cert = $("#cert").val();
+        var creditid = $("#creditid").val();
+        var owner = $("#owner").val();
+        var flightid = $("#flightid").val();
+        var weight = $("#weight").val();
+        var price = $("#price").val();
+        console.log("create-btn clicked", cert, creditid, owner, flightid, weight, price);
+
+        $.post('/lc', {cert, creditid, owner, flightid, weight, price}, function(data){
+
+            $("#result-str").empty();
+            // result message 표시
+            $("#result-str").append("<i class='bi bi-chat-square-dots'></i>");
+            $("#result-str").append("<p class='lead'>"+JSON.stringify(data)+"</p>");
+            
+            // result table 표시
+            
+            if (data.result == "success") {
+                $("#result-str").append("<i class='bi bi-emoji-laughing'></i>");
+            } else {
+                $("#result-str").append("<i class='bi bi-exclamation-square-fill'></i>");
+            }
+        });
+    });
+</script>
+
+</html>
